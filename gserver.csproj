@@ -1,0 +1,31 @@
+<Project DefaultTargets="build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" >
+    
+    <PropertyGroup>  
+        <AssemblyName>GServer</AssemblyName>  
+        <OutputPath>bin\</OutputPath>  
+    </PropertyGroup>
+    
+    <ItemGroup>  
+        <Server Include="drawpane.cs" />  
+        <Server Include="user.cs" />  
+        <Server Include="point.cs" />
+        <Server Include="gs.cs" />
+    </ItemGroup>
+ 
+    <ItemGroup>
+        <Client Include="user.cs" />
+        <Client Include="point.cs" />
+    </ItemGroup>
+    
+    <Target Name="build" Inputs="@(Compile)" Outputs="$(OutputPath)$(AssemblyName).exe">
+        <MakeDir Directories="$(OutputPath)" Condition="!Exists('$(OutputPath)')" />
+        <Csc Sources="@(Server)" OutputAssembly="$(OutputPath)$(AssemblyName).exe"/>
+    </Target>
+    
+    <Target Name="clean">
+        <Delete Files="$(OutputPath)$(AssemblyName).exe" />
+    </Target>
+    
+    <Target Name="rebuild" DependsOnTargets="clean;build" />
+    
+</Project>  
